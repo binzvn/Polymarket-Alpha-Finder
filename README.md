@@ -1,6 +1,8 @@
 # Polymarket Alpha Finder
 
-A tool to discover and analyze top Polymarket traders, score wallets by win rate, diversification, and strategy.
+A Python web application that takes a Polymarket market URL, discovers all wallets that traded in that market, analyzes their full trading history across all of Polymarket, classifies them (Whale Gambler / Scalper / Systematic), and scores them 0–100.
+<img width="1872" height="1167" alt="image" src="https://github.com/user-attachments/assets/f9d3e6c0-4e09-4162-82f5-7c2be17060ef" />
+
 
 ## Setup
 
