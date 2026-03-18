@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polymarket Alpha Finder</title>
+  <meta name="description" content="Discover and analyze top Polymarket traders. Score wallets by win rate, diversification, and strategy.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <!-- ═══ Top Header ═══ -->
+  <header class="top-bar">
+    <div class="logo">
+      <span class="logo-icon">◈</span>
+      <span class="logo-text">Polymarket <span class="accent">Alpha Finder</span></span>
+    </div>
+    <div class="search-wrapper" id="searchWrapper">
+      <input
+        type="text"
+        id="urlInput"
+        class="url-input"
+        placeholder="Paste Polymarket URL… e.g. https://polymarket.com/event/…"
+        spellcheck="false"
+      />
+      <button id="analyzeBtn" class="btn-analyze" onclick="startAnalysis()">
+        <span class="btn-text">Analyze</span>
+        <span class="btn-loader hidden" id="btnLoader"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══ Progress Bar ═══ -->
+  <div class="progress-container hidden" id="progressContainer">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="progress-text" id="progressText">Initializing…</div>
+  </div>
+
+  <!-- ═══ Event Title ═══ -->
+  <div class="event-title hidden" id="eventTitle"></div>
+
+  <!-- ═══ Summary Cards ═══ -->
+  <section class="summary-cards hidden" id="summaryCards">
+    <div class="card card-analyzed">
+      <span class="card-value" id="cardAnalyzed">0</span>
+      <span class="card-label">ANALYZED</span>
+    </div>
+    <div class="card card-systematic">
+      <span class="card-value" id="cardSystematic">0</span>
+      <span class="card-label">SYSTEMATIC</span>
+    </div>
+    <div class="card card-whale">
+      <span class="card-value" id="cardWhale">0</span>
+      <span class="card-label">WHALE GAMBLERS</span>
+    </div>
+    <div class="card card-scalper">
+      <span class="card-value" id="cardScalper">0</span>
+      <span class="card-label">SCALPERS</span>
+    </div>
+  </section>
+
+  <!-- ═══ Toolbar: Filters + Export ═══ -->
+  <section class="toolbar hidden" id="toolbar">
+    <div class="filter-tabs">
+      <button class="tab active" data-filter="all" onclick="setFilter('all', this)">All</button>
+      <button class="tab" data-filter="systematic" onclick="setFilter('systematic', this)">Systematic</button>
+      <button class="tab" data-filter="whale_gambler" onclick="setFilter('whale_gambler', this)">Whales</button>
+      <button class="tab" data-filter="scalper" onclick="setFilter('scalper', this)">Scalpers</button>
+      <button class="tab" data-filter="passing" onclick="setFilter('passing', this)">Passing Filters</button>
+    </div>
+    <button class="btn-export" onclick="exportCSV()">Export CSV</button>
+  </section>
+
+  <!-- ═══ Data Table ═══ -->
+  <section class="table-container hidden" id="tableContainer">
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th class="sortable" onclick="sortTable('name')">NAME <span class="sort-arrow" id="sort-name"></span></th>
+          <th class="sortable col-num" onclick="sortTable('score')">SCORE <span class="sort-arrow" id="sort-score"></span></th>
+          <th class="sortable" onclick="sortTable('type')">TYPE <span class="sort-arrow" id="sort-type"></span></th>
+          <th class="sortable col-num" onclick="sortTable('total_pnl')">PNL $ <span class="sort-arrow" id="sort-total_pnl"></span></th>
+          <th class="sortable col-num" onclick="sortTable('pnl_pct')">PNL % <span class="sort-arrow" id="sort-pnl_pct"></span></th>
+          <th class="sortable col-num" onclick="sortTable('win_rate')">WR % <span class="sort-arrow" id="sort-win_rate"></span></th>
+          <th class="sortable col-num" onclick="sortTable('total_positions')">POSITIONS <span class="sort-arrow" id="sort-total_positions"></span></th>
+          <th class="sortable col-num" onclick="sortTable('num_markets')">MARKETS <span class="sort-arrow" id="sort-num_markets"></span></th>
+          <th class="sortable col-num" onclick="sortTable('cv')">CV <span class="sort-arrow" id="sort-cv"></span></th>
+          <th class="sortable col-num" onclick="sortTable('concentration')">CONC % <span class="sort-arrow" id="sort-concentration"></span></th>
+          <th>FILTER</th>
+          <th>PROFILE</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </section>
+
+  <!-- ═══ Empty / Error State ═══ -->
+  <section class="empty-state" id="emptyState">
+    <div class="empty-icon">◈</div>
+    <h2>Paste a Polymarket URL to start</h2>
+    <p>Enter any Polymarket event URL above and click <strong>Analyze</strong> to discover the alpha traders.</p>
+  </section>
+
+  <div class="error-toast hidden" id="errorToast"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

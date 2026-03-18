@@ -1,14 +1,31 @@
-# Polymarket-Alpha-Finder
-A Python web application that takes a Polymarket market URL, discovers all wallets that traded in that market, analyzes their full trading history across all of Polymarket, classifies them (Whale Gambler / Scalper / Systematic), and scores them 0–100.
-<img width="2532" height="1259" alt="image" src="https://github.com/user-attachments/assets/426ba9f0-c5c4-4ab2-aa81-82cd3b915d74" />
-How It Works:
-1. Open http://localhost:8000 in browser
-2. Enter a Polymarket event URL (e.g., from a currently active market)
-3. Click "Analyze" and watch the progress indicator
-4. Verify summary cards update with correct counts
-5. Verify table shows wallet data with scores, types, and metrics
-6. Test filter tabs (All, Systematic, Whales, Scalpers)
-7. Test Export CSV button
-8. Test column sorting
+# Polymarket Alpha Finder
 
+A tool to discover and analyze top Polymarket traders, score wallets by win rate, diversification, and strategy.
 
+## Setup
+
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Run the server:
+   ```bash
+   python -m uvicorn app:app --host 0.0.0.0 --port 8000
+   ```
+
+3. Open `http://localhost:8000` in your browser.
+
+## Deployment
+
+To deploy this application, you can use any service that supports Python FastAPI applications (e.g., Render, Railway, DigitalOcean).
+
+For a VPS deployment (Ubuntu):
+1. Install Python, pip, and nginx.
+2. Clone this repository.
+3. Install requirements.
+4. Run the app using `gunicorn`:
+   ```bash
+   gunicorn app:app -w 4 -k uvicorn.workers.UvicornWorker -b 127.0.0.1:8000
+   ```
+5. Configure Nginx to reverse proxy port 80/443 to `127.0.0.1:8000`.
